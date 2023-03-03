@@ -1,28 +1,22 @@
 from django.shortcuts import render, redirect
-# from django.contrib import messages
-from django.contrib.auth import login, authenticate
-from .forms import SignUpForm
+from django.contrib import messages
+from django.contrib.auth import login, authenticate, logout
+from .forms import LoginForm, RegisterForm
 
-# def sign_up(request):
-#     if request.method == 'GET':
-#         form = RegisterForm()
-#         return render(request, 'users/register.html', { 'form': form})  
-def signup(request):
+   
+def sign_up(request):
+    if request.method == 'GET':
+        form = RegisterForm()
+        return render(request, 'users/register.html', {'form': form})    
+   
     if request.method == 'POST':
-        form = SignUpForm(request.POST)
+        form = RegisterForm(request.POST) 
         if form.is_valid():
-            user = form.save()
-            user.refresh_from_db()  
-            # load the profile instance created by the signal
+            user = form.save(commit=False)
+            user.username = user.username.lower()
             user.save()
-            raw_password = form.cleaned_data.get('password1')
-
-            # login user after signing up
-            user = authenticate(username=user.username, password=raw_password)
+            messages.success(request, 'You have singed up successfully.')
             login(request, user)
-
-            # redirect user to home page
-            return redirect('home')
-    else:
-        form = SignUpForm()
-    return render(request, 'signup.html', {'form': form})
+            return redirect('posts')
+        else:
+            return render(request, 'users/register.html', {'form': form})
