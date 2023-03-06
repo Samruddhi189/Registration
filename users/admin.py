@@ -1,11 +1,19 @@
-# from django.contrib import admin
+from django.contrib import admin
+from .views import sign_up
 
 # Register your models here.
 # from django.urls import path
-# from . import views
+
+class sign_upAdmin(admin.ModelAdmin):
+    list_display =("username","email","password")
+
+admin.site.register(sign_upAdmin, sign_up)
+
+# from django.contrib import admin
+# from django.urls import path, include
 
 # urlpatterns = [
-#     path('login/', views.sign_in, name='login'),
-#     path('logout/', views.sign_out, name='logout'),
-#     path('register/', views.sign_up, name='register'),
+#     path('admin/', admin.site.urls),
+    
 # ]
+

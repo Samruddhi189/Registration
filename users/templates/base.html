@@ -13,9 +13,9 @@
   			<a href="{% url 'posts' %}">My Posts</a>
   			<a href="{% url 'post-create' %}">New Post</a>
   			<span>Hi {{ request.user.username | title }}</span>
-  			<a href="{% url 'logout' %}">Logout</a>
+  			{% comment %} <a href="{% url 'logout' %}">Logout</a> {% endcomment %}
   		{%else%}
-  			<a href="{% url 'login' %}">Login</a>
+  			{% comment %} <a href="{% url 'login' %}">Login</a> {% endcomment %}
   			<a href="{% url 'register' %}">Register</a>
   		{%endif%}
   	</header>
